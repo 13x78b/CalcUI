@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtWidgets import QMessageBox
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -121,12 +121,37 @@ class Ui_MainWindow(object):
         self.bnt_equal.clicked.connect(lambda: self.Resoult())
 
     def Resoult(self):
-        res = eval(self.MainLabel.text())
-        self.MainLabel.setText(f"Результат: {res}")
-        self.IsEqual = True
+        try:
+            DetailsInfo = (
+                "Ви нажали кнопку, нічого не вевши. Необхідно виконати хоть 1 дію щоб все виконувалось коректно!"
+            )
+
+            if not self.IsEqual:
+                res = eval(self.MainLabel.text())
+                self.MainLabel.setText(f"Результат: {res}")
+                self.IsEqual = True
+            else:
+                error = QMessageBox()
+                error.setWindowTitle("Error")
+                error.setText("Поле пусте, зараз не можна виконати цю дію.")
+                error.setIcon(QMessageBox.Warning)
+                error.setStandardButtons(QMessageBox.Ok)
+
+                error.setInformativeText("Два рази не можна виконати дію.")
+                error.setDetailedText(DetailsInfo)
+
+
+                self.PressOk = error.exec_()
+
+                if self.PressOk == QMessageBox.Ok:
+                    self.MainLabel.setText("")
+                    self.IsEqual = False
+        except Exception as e:
+            print(e)
+
 
     def WriteNum(self, number):
-        if self.MainLabel.text() == "0" or self.IsEqual == True:
+        if self.MainLabel.text() == "0" or self.MainLabel.text() == "" or self.IsEqual == True:
             self.MainLabel.setText(number)
             self.IsEqual = False
         else:
