@@ -11,14 +11,20 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
+import webbrowser
+import sys
+
 
 class Ui_MainWindow(object):
+        MainWindowIco = r"D:\python\Calc\photos\calculator.ico"
+
         def setupUi(self, MainWindow):
                 MainWindow.setObjectName("MainWindow")
                 MainWindow.resize(600, 600)
                 self.centralwidget = QtWidgets.QWidget(MainWindow)
                 self.centralwidget.setStyleSheet("background-color: #5a6779\n"
                 "")
+                MainWindow.setWindowIcon(QtGui.QIcon(self.MainWindowIco))
                 self.centralwidget.setObjectName("centralwidget")
                 self.MainLabel = QtWidgets.QLabel(self.centralwidget)
                 self.MainLabel.setGeometry(QtCore.QRect(10, 10, 581, 61))
@@ -268,6 +274,13 @@ class Ui_MainWindow(object):
 
                 self.btn_equal.clicked.connect(lambda: self.Resoult())
                 self.btn_str.clicked.connect(lambda: self.ClearLabel())
+
+                self.actionGit.triggered.connect(lambda: self.OpenGit())
+                self.actionExit.triggered.connect(app.quit)
+
+        def OpenGit(self):
+               webbrowser.open("https://github.com/13x78b")
+               return
 
         def WriteNum(self, number: str):
                 if self.MainLabel.text() == "0" or self.MainLabel.text() == "" or self.IsEqual == True:
