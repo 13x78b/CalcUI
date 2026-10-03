@@ -12,18 +12,18 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 
 import webbrowser
-import sys
+import sys, os
 
 
 class Ui_MainWindow(object):
-        MainWindowIco = r"D:\python\Calc\photos\calculator.ico"
-
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         def setupUi(self, MainWindow):
                 MainWindow.setObjectName("MainWindow")
                 MainWindow.resize(600, 600)
                 self.centralwidget = QtWidgets.QWidget(MainWindow)
                 self.centralwidget.setStyleSheet("background-color: #5a6779\n"
                 "")
+                self.MainWindowIco = os.path.join(self.BASE_DIR, "photos", "calculator.ico")
                 MainWindow.setWindowIcon(QtGui.QIcon(self.MainWindowIco))
                 self.centralwidget.setObjectName("centralwidget")
                 self.MainLabel = QtWidgets.QLabel(self.centralwidget)
